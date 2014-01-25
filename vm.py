@@ -14,10 +14,6 @@ def is_operator(ast, key):
 
 def call_operator(ast, item, inputs, outputs):
     operator = item.tval
-#    print "Calling operator:", item, inputs, outputs 
-    # 0 arg operators
-
-    # 1 arg operators
     a = inputs.pop()
 
 
@@ -26,7 +22,6 @@ def call_operator(ast, item, inputs, outputs):
             outputs.pop() # Remove the following operator
         return
     elif operator == "call":
-        print ""
         call_function(ast, a, inputs, outputs)    
         return
     # 2 arg operators
@@ -89,9 +84,6 @@ def definition_match(keys, stack):
     return True, mapping
 
 def apply_mapping(code, mapping):
-    #print "apply mapping", code, mapping
-    #[(1|n), (2|1), (51|-), (1|fib), (1|n), (2|2), (51|-), (1|fib), (51|+)] 
-    #{'n': (2|3)}
     new_code = []
     for idx, val in enumerate(code):
         if val.tval in mapping:
@@ -146,14 +138,13 @@ def evaluate(ast, args):
     steps = 0
     while working:
         steps += 1
-        print "Step", tmp,"     ",working[::-1]
+#        print "Step", tmp,"     ",working[::-1]
 #        time.sleep(1)
         item = working.pop()
-#        if is_function(ast, item):
-#            call_function(ast, item, tmp, working)
-#        el
 #        print item
         if is_operator(ast, item):
+#            if item.tval == 'call':
+#                print ""
             call_operator(ast, item, tmp, working)
         else:
             tmp.push(item)
