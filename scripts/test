@@ -1,0 +1,15 @@
+fun fib
+0 | 0
+1 | 1
+x | x 1 - fib call x 2 - fib call + 
+
+fun factorial
+0 | 1
+x | x 1 - factorial call x *
+
+fun main
+_ | 4 fib call 3 factorial call +
+
+# fib(4) = 3
+# factorial(3) = 6
+# 3 + 6 = 9
