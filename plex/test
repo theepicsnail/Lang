@@ -1,0 +1,101 @@
+// Declaring variables
+// x = 0;
+// y = "hello world";
+// These are statically typed. The types are implied
+// x is int, y = string
+
+// Declaring functions
+// square = int(int x){ return x*x; };
+//
+// Anonymous functions
+// foo takes a function of type int(), and returns an int
+// foo = int(int() cb) { return cb()+1; }
+// x = foo(int(){ return 2; });
+// x is now 3.
+
+// Scopes
+// Scopes are a type (like int of strings)
+// like 123 is implicitly int
+// and "asdf" is implicitly string
+// {...} is implicity Scope
+//
+// s = Scope(){
+//  return {}
+// }
+//
+// s is a function, that returns a scope
+//
+// s = Scope(){
+//   return {
+//     a = 1;
+//     b = int() {
+//       return 2;
+//     };
+//   };
+// };
+//
+// x = s();
+// x.a;    // is 1
+// x.b;    // is a function that returns 2
+// x.b();  // is 2
+//
+
+// Threading
+// calling a function, when prefixed by &
+// will run the function in the background.
+// If the function returns type T, then calling
+// with & will return type T().
+//
+// f = int(){ sleep(1); print("B"); return 1; };
+// g = &f(); //has type int()
+// // g is currently sleeping for 1 second in the background
+// print("A"); //Prints 'A' before f reaches 1 second
+// print(g()); //g() waits for g's return ('B' being printed before the returh)
+//             // then g's return gets printed.
+// "AB1" is output.
+//
+
+main = int() {
+  x = 0; // 0 is type int, so x is int
+
+  foo = void(int x){  // type void(int)
+    sleep(x);
+    print(x);
+  };
+
+  a = &foo(2); // background the call to foo
+  b = &foo(1); // a,b,c have type void()
+  c = &foo(3); // when called, blocks until return
+
+
+  a(); // wait for a to finish, by now b has printed 1
+  b(); // wait for b to finish, it already has.
+  c(); // wait for c to finish, by now a has printed 2
+       // while waiting for c to finish, c prints 3
+
+
+  // Scope objects are like 'objects'
+  // They contain all the variables and functions
+  counter = scope(){
+    i = 0;
+    return {
+      get = int(){
+        return i;
+      };
+      inc = void(){
+        i += 1;
+      };
+    };
+  };
+
+  c = counter(); // Constructs a new scope
+  x = c.get(); // returns 1
+  y = &c.inc();
+  z = c.get(); // returns 1 or 2, not defined
+  y();
+  z = c.get(); // returns 2
+
+  return 1;
+
+};
+
